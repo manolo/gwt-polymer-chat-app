@@ -1,9 +1,10 @@
 package org.gwtcon.client;
 
-import static com.google.gwt.query.client.GQuery.console;
+import static com.vaadin.polymer.Polymer.cast;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.js.JsProperty;
 import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.core.shared.GWT;
@@ -18,6 +19,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.vaadin.polymer.Polymer;
 import com.vaadin.polymer.elemental.HTMLElement;
+import com.vaadin.polymer.iron.IronListElement;
 import com.vaadin.polymer.iron.IronLocalstorageElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
 import com.vaadin.polymer.paper.PaperFabElement;
@@ -40,6 +42,7 @@ public class Main extends Composite {
 
     @UiField HTMLElement newThread;
     @UiField PaperInputElement msgInput;
+    @UiField IronListElement messages;
     @UiField DivElement nickname;
     @UiField ImageElement avatar;
     @UiField PaperFabElement send;
@@ -47,6 +50,7 @@ public class Main extends Composite {
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
 
+    private JsArray list = JsArray.createArray().cast();
     private Prefs prefs;
 
     public Main() {
@@ -79,7 +83,7 @@ public class Main extends Composite {
     private void send() {
         JavaScriptObject msg = createMsg(prefs.getNickname(), msgInput.getValue());
         msgInput.setValue("");
-        console.log("New message: ", msg);
+        list.push(cast(msg));
         updateUi();
     }
 
@@ -97,6 +101,10 @@ public class Main extends Composite {
     private void updateUi() {
         avatar.setSrc("https://robohash.org/" + prefs.getNickname());
         nickname.setInnerText(prefs.getNickname());
+
+        messages.setItems(list);
+        refreshIronList(messages);
+        messages.scrollToIndex(list.length());
     }
 
     private static <T> T createMsg(String owner, String message) {
@@ -107,4 +115,10 @@ public class Main extends Composite {
         m.setMessage(message);
         return (T)m;
     }
+
+    // FIXME: iron-list should have a way for refreshing
+    private native static void refreshIronList(IronListElement ironList)
+    /*-{
+       ironList._itemsChanged({path:'items'})
+    }-*/;
 }

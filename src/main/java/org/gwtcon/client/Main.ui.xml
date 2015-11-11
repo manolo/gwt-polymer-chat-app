@@ -40,19 +40,20 @@
       </paper-toolbar>
 
       <div class="content layout vertical fit">
-        <div class="messages flex">
+        <iron-list ui:field="messages" as="item" class="messages flex">
+            <template>
                <div class="message">
                   <paper-material class="layout horizontal">
-                      <img class="profile" src="https://robohash.org/owner"/>
+                      <img class="profile" src="https://robohash.org/[[item.owner]]"/>
                       <div class="flex">
-                          <div class="owner">michelangelo</div>
-                          <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget ex vitae enim tincidunt euismod ac sit amet purus</div>
+                          <div class="owner">[[item.owner]]</div>
+                          <div class="text">[[item.message]]</div>
                       </div>
                       <iron-icon icon="star"/>
                   </paper-material>
                </div>
-        </div>
-
+            </template>
+        </iron-list>
         <paper-material elevation="5" class="layout horizontal write">
         <paper-input ui:field="msgInput" label="Type message..." class="flex" allowedPattern='.+' preventInvalidInput=""/>
         <paper-fab ui:field="send" icon="send" />
