@@ -1,5 +1,6 @@
 package org.gwtcon.client;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.js.JsProperty;
 import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.core.shared.GWT;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.vaadin.polymer.Polymer;
 import com.vaadin.polymer.elemental.HTMLElement;
+import com.vaadin.polymer.iron.IronLocalstorageElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
 import com.vaadin.polymer.paper.PaperInputElement;
 
@@ -28,6 +30,8 @@ public class Main extends Composite {
 
     private static MainUiBinder uiBinder = GWT.create(MainUiBinder.class);
 
+    @UiField IronLocalstorageElement store;
+
     @UiField HTMLElement newThread;
     @UiField DivElement nickname;
     @UiField ImageElement avatar;
@@ -35,7 +39,7 @@ public class Main extends Composite {
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
 
-    private String name;
+    private Prefs prefs;
 
     public Main() {
         initWidget(uiBinder.createAndBindUi(this));
@@ -46,17 +50,31 @@ public class Main extends Composite {
 
         nicknameDialog.addEventListener("iron-overlay-closed", e -> {
             if (Polymer.<Boolean>property(e.getDetail(), "confirmed")) {
-                name = nicknameInput.getValue();
-                updateUi();
+                prefs.setNickname(nicknameInput.getValue());
+                reloadPrefs();
             }
         });
 
-        name = names[Random.nextInt(names.length)];
+
+        Polymer.ready(store, (o) -> {
+            reloadPrefs();
+            return null;
+        });
+    }
+
+    private void reloadPrefs() {
+        prefs = store.getValue().cast();
+        if (prefs == null) {
+            prefs = JavaScriptObject.createObject().cast();
+            prefs.setNickname(names[Random.nextInt(names.length)]);
+            store.setValue((JavaScriptObject) prefs);
+        }
+        store.save();
         updateUi();
     }
 
     private void updateUi() {
-        avatar.setSrc("https://robohash.org/" + name);
-        nickname.setInnerText(name);
+        avatar.setSrc("https://robohash.org/" + prefs.getNickname());
+        nickname.setInnerText(prefs.getNickname());
     }
 }
