@@ -75,7 +75,7 @@
 
   <iron-localstorage name="prefs" ui:field="store"/>
 
-  <vaadin-pouchdb dbname='chat' ui:field="db" />
+  <vaadin-pouchdb dbname='http://sa:sa@localhost:5984/chat' ui:field="db" />
 
   </g:HTMLPanel>
 </ui:UiBinder>
