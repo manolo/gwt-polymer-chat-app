@@ -9,6 +9,7 @@ public class Chat implements com.google.gwt.core.client.EntryPoint {
 
     public void onModuleLoad() {
         Polymer.importHref(Arrays.asList(
+                "vaadin-pouchdb",
                 "iron-localstorage",
                 "paper-styles",
                 "iron-icons/iron-icons.html",
