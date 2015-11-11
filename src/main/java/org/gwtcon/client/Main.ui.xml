@@ -14,9 +14,15 @@
 
   <paper-drawer-panel id="drawerPanel">
     <paper-header-panel mode="scroll" drawer="">
+      <paper-toolbar id="navheader" class="tall">
+      </paper-toolbar>
     </paper-header-panel>
 
-    <paper-header-panel id="scrollheader"  main="" >
+    <paper-header-panel id="scrollheader" mode="waterfall" main="" >
+      <paper-toolbar id="mainheader" class="paper-header headerClass">
+        <paper-icon-button id="navicon" icon="menu" paper-drawer-toggle=""></paper-icon-button>
+      </paper-toolbar>
+
     </paper-header-panel>
   </paper-drawer-panel>
   </g:HTMLPanel>
