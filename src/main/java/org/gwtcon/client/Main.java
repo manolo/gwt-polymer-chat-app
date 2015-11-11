@@ -65,7 +65,7 @@ public class Main extends Composite {
         });
 
         nicknameDialog.addEventListener("iron-overlay-closed", e -> {
-            if (Polymer.<Boolean>property(e.getDetail(), "closed")) {
+            if (Polymer.<Boolean>property(e.getDetail(), "confirmed")) {
                 prefs.setNickname(nicknameInput.getValue());
                 reloadPrefs();
             }
