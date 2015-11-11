@@ -9,7 +9,11 @@ public class Chat implements com.google.gwt.core.client.EntryPoint {
 
     public void onModuleLoad() {
         Polymer.importHref(Arrays.asList(
-                "paper-styles"
+                "paper-styles",
+                "neon-animation/neon-animations.html",
+                "paper-drawer-panel",
+                "paper-header-panel",
+                "iron-flex-layout"
         ));
 
         Polymer.whenReady((o) -> {

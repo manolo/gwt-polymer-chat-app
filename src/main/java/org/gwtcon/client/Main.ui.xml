@@ -12,5 +12,12 @@
 
   <style></style>
 
+  <paper-drawer-panel id="drawerPanel">
+    <paper-header-panel mode="scroll" drawer="">
+    </paper-header-panel>
+
+    <paper-header-panel id="scrollheader"  main="" >
+    </paper-header-panel>
+  </paper-drawer-panel>
   </g:HTMLPanel>
 </ui:UiBinder>
