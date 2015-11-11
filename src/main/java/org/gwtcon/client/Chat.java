@@ -22,6 +22,9 @@ public class Chat implements com.google.gwt.core.client.EntryPoint {
                 "paper-icon-item",
                 "paper-icon-button",
                 "paper-button",
+                "paper-input",
+                "paper-material",
+                "paper-dialog",
                 "iron-flex-layout",
                 "iron-icon"
         ));
