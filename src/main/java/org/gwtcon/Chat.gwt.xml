@@ -1,0 +1,10 @@
+<module rename-to="chat">
+    <inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.query.Query"/>
+
+    <entry-point class="org.gwtcon.client.Chat"/>
+
+    <add-linker name="xsiframe"/>
+
+    <collapse-all-properties value="true" />
+</module>
