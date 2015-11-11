@@ -1,0 +1,66 @@
+
+    paper-toolbar, paper-fab {
+      background: #FF6B00 !important;
+    }
+
+    #drawerPanel {
+      font-family: arial;
+    }
+    #navheader {
+      font-size: inherit;
+      color: #fff;
+    }
+    #navheader .bottom :last-child {
+      font-size: small;
+      opacity: .8;
+    }
+    #coverimage {
+      height: 192px;
+      top: 0;
+    }
+
+    paper-icon-item {
+      display: block;
+      padding: 20px;
+    }
+    paper-icon-item iron-icon {
+      width: 56px !important;
+    }
+
+    img.profile {
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      margin: 0px 15px 0px 10px;
+      background-image: url("back.jpg");
+    }
+
+    .message, paper-material {
+      padding: 8px;
+      color: #044204;
+    }
+    .message .text {
+      color: grey;
+    }
+    .message .owner {
+      padding-top: 10px;
+    }
+
+    .messages {
+      overflow-y: auto;
+    }
+    .write {
+      padding: 0px 20px 5px 20px;
+    }
+
+    paper-dialog {
+      padding: 5px;
+      min-width: 500px;
+    }
+    paper-button {
+      padding: 10px;
+      color: black;
+    }
+    paper-badge {
+        margin: 5px -10px;
+    }
