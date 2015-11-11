@@ -65,5 +65,7 @@
       </div>
   </paper-dialog>
 
+  <iron-localstorage name="prefs" ui:field="store"/>
+
   </g:HTMLPanel>
 </ui:UiBinder>
