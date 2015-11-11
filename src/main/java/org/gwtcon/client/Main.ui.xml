@@ -16,8 +16,8 @@
     <paper-header-panel mode="scroll" drawer="">
       <paper-toolbar id="navheader" class="tall">
         <iron-image class="fit" id="coverimage" src="back.jpg" sizing="cover"></iron-image>
-        <div class="bottom flex">michelangelo</div>
-        <img class="bottom profile" src="https://robohash.org/michelangelo" />
+        <div ui:field="nickname" class="bottom flex"></div>
+        <img ui:field="avatar" class="bottom profile" src="https://robohash.org/Unknown" />
       </paper-toolbar>
       <paper-menu selected="0" selectable="paper-icon-item" on-iron-activate="menuSelect">
         <paper-icon-item role="menuitem">
@@ -36,6 +36,7 @@
         <paper-icon-button icon="search" class="fade-on-drawer-open"></paper-icon-button>
         <paper-icon-button icon="refresh" class="fade-on-drawer-open"></paper-icon-button>
         <paper-icon-button icon="perm-identity" class="fade-on-drawer-open" ui:field="newThread"></paper-icon-button>
+
       </paper-toolbar>
 
       <div class="content layout vertical fit">
@@ -52,8 +53,17 @@
                </div>
         </div>
       </div>
-
     </paper-header-panel>
   </paper-drawer-panel>
+
+  <paper-dialog ui:field="nicknameDialog" modal="true" class="layout vertical center">
+      <h2>What's your Nickname</h2>
+      <paper-input ui:field="nicknameInput" class="flex" style="width: 80%"/>
+      <div class="buttons">
+          <paper-button elevation="1"  dialog-dismiss="">Cancel</paper-button>
+          <paper-button elevation="1"  dialog-confirm="">Accept</paper-button>
+      </div>
+  </paper-dialog>
+
   </g:HTMLPanel>
 </ui:UiBinder>
