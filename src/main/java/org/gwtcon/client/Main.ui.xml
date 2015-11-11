@@ -52,6 +52,11 @@
                   </paper-material>
                </div>
         </div>
+
+        <paper-material elevation="5" class="layout horizontal write">
+        <paper-input ui:field="msgInput" label="Type message..." class="flex" allowedPattern='.+' preventInvalidInput=""/>
+        <paper-fab ui:field="send" icon="send" />
+        </paper-material>
       </div>
     </paper-header-panel>
   </paper-drawer-panel>
