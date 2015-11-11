@@ -15,12 +15,20 @@
   <paper-drawer-panel id="drawerPanel">
     <paper-header-panel mode="scroll" drawer="">
       <paper-toolbar id="navheader" class="tall">
+        <iron-image class="fit" id="coverimage" src="back.jpg" sizing="cover"></iron-image>
+        <div class="bottom flex">michelangelo</div>
+        <img class="bottom profile" src="https://robohash.org/michelangelo" />
       </paper-toolbar>
     </paper-header-panel>
 
-    <paper-header-panel id="scrollheader" mode="waterfall" main="" >
+    <paper-header-panel id="scrollheader" mode="waterfall" main=""  keep-condensed-header="" condenses="" fixed="">
       <paper-toolbar id="mainheader" class="paper-header headerClass">
         <paper-icon-button id="navicon" icon="menu" paper-drawer-toggle=""></paper-icon-button>
+        <div class="flex title">Inbox</div>
+        <paper-icon-button icon="search" class="fade-on-drawer-open"></paper-icon-button>
+        <paper-icon-button icon="refresh" class="fade-on-drawer-open"></paper-icon-button>
+        <paper-icon-button icon="perm-identity" class="fade-on-drawer-open" ui:field="newThread"></paper-icon-button>
+
       </paper-toolbar>
 
     </paper-header-panel>
