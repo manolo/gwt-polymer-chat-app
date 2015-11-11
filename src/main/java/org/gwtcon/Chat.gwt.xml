@@ -2,6 +2,8 @@
     <inherits name="com.google.gwt.user.User"/>
     <inherits name="com.google.gwt.query.Query"/>
 
+    <inherits name="com.vaadin.polymer.Elements"/>
+
     <entry-point class="org.gwtcon.client.Chat"/>
 
     <add-linker name="xsiframe"/>

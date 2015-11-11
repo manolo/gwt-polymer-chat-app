@@ -1,11 +1,20 @@
 package org.gwtcon.client;
 
-import com.google.gwt.user.client.ui.RootPanel;
+import java.util.Arrays;
 
+import com.google.gwt.user.client.ui.RootPanel;
+import com.vaadin.polymer.Polymer;
 
 public class Chat implements com.google.gwt.core.client.EntryPoint {
 
     public void onModuleLoad() {
-        RootPanel.get().add(new Main());
+        Polymer.importHref(Arrays.asList(
+                "paper-styles"
+        ));
+
+        Polymer.whenReady((o) -> {
+            RootPanel.get().add(new Main());
+            return null;
+        });
     }
 }

@@ -12,6 +12,7 @@
 
     <properties>
       <gwtVersion>2.8.0.VC-SNAPSHOT</gwtVersion>
+      <gwtPolymerVersion>${project.version}</gwtPolymerVersion>
       <maven.compiler.target>1.8</maven.compiler.target>
       <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -47,6 +48,12 @@
             <artifactId>gwt-codeserver</artifactId>
             <scope>provided</scope>
             <version>${gwtVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin.polymer</groupId>
+            <artifactId>vaadin-gwt-polymer-elements</artifactId>
+            <version>${gwtPolymerVersion}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
