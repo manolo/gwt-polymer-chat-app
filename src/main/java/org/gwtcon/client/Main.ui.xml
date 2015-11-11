@@ -19,6 +19,16 @@
         <div class="bottom flex">michelangelo</div>
         <img class="bottom profile" src="https://robohash.org/michelangelo" />
       </paper-toolbar>
+
+      <paper-menu selected="0" selectable="paper-icon-item" on-iron-activate="menuSelect">
+        <paper-icon-item role="menuitem">
+          <iron-icon icon="label" item-icon=""></iron-icon>Inbox
+        </paper-icon-item>
+        <paper-icon-item role="menuitem">
+          <iron-icon icon="label" item-icon=""></iron-icon>Social
+        </paper-icon-item>
+      </paper-menu>
+
     </paper-header-panel>
 
     <paper-header-panel id="scrollheader" mode="waterfall" main=""  keep-condensed-header="" condenses="" fixed="">
@@ -28,7 +38,6 @@
         <paper-icon-button icon="search" class="fade-on-drawer-open"></paper-icon-button>
         <paper-icon-button icon="refresh" class="fade-on-drawer-open"></paper-icon-button>
         <paper-icon-button icon="perm-identity" class="fade-on-drawer-open" ui:field="newThread"></paper-icon-button>
-
       </paper-toolbar>
 
     </paper-header-panel>
