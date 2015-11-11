@@ -21,6 +21,7 @@ import com.vaadin.polymer.Polymer;
 import com.vaadin.polymer.elemental.HTMLElement;
 import com.vaadin.polymer.iron.IronListElement;
 import com.vaadin.polymer.iron.IronLocalstorageElement;
+import com.vaadin.polymer.paper.PaperBadgeElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
 import com.vaadin.polymer.paper.PaperFabElement;
 import com.vaadin.polymer.paper.PaperInputElement;
@@ -47,6 +48,7 @@ public class Main extends Composite {
     @UiField DivElement nickname;
     @UiField ImageElement avatar;
     @UiField PaperFabElement send;
+    @UiField PaperBadgeElement count;
 
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
@@ -62,7 +64,7 @@ public class Main extends Composite {
         });
 
         nicknameDialog.addEventListener("iron-overlay-closed", e -> {
-            if (Polymer.<Boolean>property(e.getDetail(), "confirmed")) {
+            if (Polymer.<Boolean>property(e.getDetail(), "closed")) {
                 prefs.setNickname(nicknameInput.getValue());
                 reloadPrefs();
             }
@@ -106,6 +108,7 @@ public class Main extends Composite {
         messages.setItems(list);
         refreshIronList(messages);
         messages.scrollToIndex(list.length());
+        count.setLabel("" + list.length());
     }
 
     private static <T> T createMsg(String owner, String message) {
