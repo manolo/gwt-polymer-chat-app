@@ -24,6 +24,7 @@ import com.vaadin.polymer.iron.IronLocalstorageElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
 import com.vaadin.polymer.paper.PaperFabElement;
 import com.vaadin.polymer.paper.PaperInputElement;
+import com.vaadin.polymer.vaadin.VaadinPouchdbElement;
 
 public class Main extends Composite {
 
@@ -38,6 +39,7 @@ public class Main extends Composite {
 
     private static MainUiBinder uiBinder = GWT.create(MainUiBinder.class);
 
+    @UiField VaadinPouchdbElement db;
     @UiField IronLocalstorageElement store;
 
     @UiField HTMLElement newThread;
@@ -50,7 +52,7 @@ public class Main extends Composite {
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
 
-    private JsArray list = JsArray.createArray().cast();
+    private JsArray list;
     private Prefs prefs;
 
     public Main() {
@@ -74,17 +76,28 @@ public class Main extends Composite {
         });
         send.addEventListener("click", e -> send());
 
-        Polymer.ready(store, (o) -> {
-            reloadPrefs();
+        Polymer.ready(db, (o) -> {
+            db.changes(msg -> {
+                list.push(cast(msg));
+                updateUi();
+                return null;
+            });
+
+            db.allDocs().then(rows -> {
+                list = cast(rows);
+                reloadPrefs();
+                return null;
+            });
             return null;
         });
     }
 
     private void send() {
-        JavaScriptObject msg = createMsg(prefs.getNickname(), msgInput.getValue());
-        msgInput.setValue("");
-        list.push(cast(msg));
-        updateUi();
+        if (!msgInput.getValue().isEmpty()) {
+            JavaScriptObject msg = createMsg(prefs.getNickname(), msgInput.getValue());
+            msgInput.setValue("");
+            db.post((JavaScriptObject) msg);
+        }
     }
 
     private void reloadPrefs() {
