@@ -3,10 +3,15 @@ package org.gwtcon.client;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
+import static com.google.gwt.query.client.GQuery.console;
+
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Random;
@@ -16,6 +21,7 @@ import com.vaadin.polymer.Polymer;
 import com.vaadin.polymer.elemental.HTMLElement;
 import com.vaadin.polymer.iron.IronLocalstorageElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
+import com.vaadin.polymer.paper.PaperFabElement;
 import com.vaadin.polymer.paper.PaperInputElement;
 
 public class Main extends Composite {
@@ -35,8 +41,10 @@ public class Main extends Composite {
     @UiField IronLocalstorageElement store;
 
     @UiField HTMLElement newThread;
+    @UiField PaperInputElement msgInput;
     @UiField DivElement nickname;
     @UiField ImageElement avatar;
+    @UiField PaperFabElement send;
 
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
@@ -57,11 +65,24 @@ public class Main extends Composite {
             }
         });
 
+        msgInput.addEventListener("keyup", e -> {
+            if (((NativeEvent) e).getKeyCode() == KeyCodes.KEY_ENTER) {
+                send();
+            }
+        });
+        send.addEventListener("click", e -> send());
 
         Polymer.ready(store, (o) -> {
             reloadPrefs();
             return null;
         });
+    }
+
+    private void send() {
+        JavaScriptObject msg = createMsg(prefs.getNickname(), msgInput.getValue());
+        msgInput.setValue("");
+        console.log("New message: ", msg);
+        updateUi();
     }
 
     private void reloadPrefs() {
@@ -78,5 +99,14 @@ public class Main extends Composite {
     private void updateUi() {
         avatar.setSrc("https://robohash.org/" + prefs.getNickname());
         nickname.setInnerText(prefs.getNickname());
+    }
+
+    private static <T> T createMsg(String owner, String message) {
+        Message m = JavaScriptObject.createObject().cast();
+        m.setTs(Duration.currentTimeMillis());
+        m.setOwner(owner);
+        m.setId("" + m.getTs());
+        m.setMessage(message);
+        return (T)m;
     }
 }
