@@ -7,12 +7,12 @@
     <groupId>org.gwtconf</groupId>
     <artifactId>gwt-polymer-chat</artifactId>
     <packaging>war</packaging>
-    <version>1.2.1.0-alpha1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>GWT Polymer Chat</name>
 
     <properties>
-      <gwtVersion>2.8.0.VC-SNAPSHOT</gwtVersion>
-      <gwtPolymerVersion>${project.version}</gwtPolymerVersion>
+      <gwtVersion>2.8.0-SNAPSHOT</gwtVersion>
+      <gwtPolymerVersion>1.2.1.1-SNAPSHOT</gwtPolymerVersion>
       <maven.compiler.target>1.8</maven.compiler.target>
       <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
@@ -76,8 +76,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <style>PRETTY</style>
                     <runTarget>/</runTarget>
-                    <jsInteropMode>JS</jsInteropMode>
+                    <jsInteropMode>JS_RC</jsInteropMode>
                     <disableCastChecking>true</disableCastChecking>
                     <disableClassMetadata>true</disableClassMetadata>
                     <enableAssertions>false</enableAssertions>
