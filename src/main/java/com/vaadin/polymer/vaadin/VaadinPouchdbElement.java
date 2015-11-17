@@ -8,6 +8,7 @@ package com.vaadin.polymer.vaadin;
 import com.vaadin.polymer.elemental.*;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -18,30 +19,51 @@ import jsinterop.annotations.JsType;
 @com.google.gwt.core.client.js.JsType
 public interface VaadinPouchdbElement extends HTMLElement {
 
-    public static final String TAG = "vaadin-pouchdb";
-    public static final String SRC = "vaadin-pouchdb/sample.html";
+    @JsOverlay public static final String TAG = "vaadin-pouchdb";
+    @JsOverlay public static final String SRC = "vaadin-pouchdb/sample.html";
 
 
     /**
      * 
      *
      * JavaScript Info:
-     * @property dbname
-     * @type String
+     * @property descending
+     * @type Boolean
      * 
      */
     @com.google.gwt.core.client.js.JsProperty
-    @JsProperty String getDbname();
+    @JsProperty boolean getDescending();
     /**
      * 
      *
      * JavaScript Info:
-     * @property dbname
+     * @property descending
+     * @type Boolean
+     * 
+     */
+    @com.google.gwt.core.client.js.JsProperty
+    @JsProperty void setDescending(boolean value);
+
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property index
      * @type String
      * 
      */
     @com.google.gwt.core.client.js.JsProperty
-    @JsProperty void setDbname(String value);
+    @JsProperty String getIndex();
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property index
+     * @type String
+     * 
+     */
+    @com.google.gwt.core.client.js.JsProperty
+    @JsProperty void setIndex(String value);
 
     /**
      * 
@@ -64,6 +86,38 @@ public interface VaadinPouchdbElement extends HTMLElement {
     @com.google.gwt.core.client.js.JsProperty
     @JsProperty void setRemote(String value);
 
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property dbname
+     * @type String
+     * 
+     */
+    @com.google.gwt.core.client.js.JsProperty
+    @JsProperty String getDbname();
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property dbname
+     * @type String
+     * 
+     */
+    @com.google.gwt.core.client.js.JsProperty
+    @JsProperty void setDbname(String value);
+
+
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @method createIndex
+     * @param {} prop  
+     * 
+     * 
+     */
+    void createIndex(Object prop);
 
     /**
      * <p> TODO</p>
@@ -77,37 +131,25 @@ public interface VaadinPouchdbElement extends HTMLElement {
     void sync(Object syncError);
 
     /**
-     * <p>Post</p>
+     * <p>Subscribe to changes</p>
      *
      * JavaScript Info:
-     * @method post
-     * @param {Object} obj  
+     * @method changes
+     * @param {Function} func  
      * 
-     * @return {Promise}
+     * 
      */
-    Promise post(JavaScriptObject obj);
+    void changes(Function func);
 
     /**
-     * <p>Put</p>
+     * <p>allDocs</p>
      *
      * JavaScript Info:
-     * @method put
-     * @param {Object} obj  
+     * @method allDocs
      * 
      * @return {Promise}
      */
-    Promise put(JavaScriptObject obj);
-
-    /**
-     * <p>Remove</p>
-     *
-     * JavaScript Info:
-     * @method remove
-     * @param {Object} obj  
-     * 
-     * @return {Promise}
-     */
-    Promise remove(JavaScriptObject obj);
+    Promise allDocs();
 
     /**
      * <p>Info</p>
@@ -123,35 +165,48 @@ public interface VaadinPouchdbElement extends HTMLElement {
     void info(JavaScriptObject info, Function fnc, Function err);
 
     /**
-     * <p>Subscribe to changes</p>
+     * <p>Get all docs matching the query string if provided,<br>otherwise we will use the default index defined as an attribute.</p>
      *
      * JavaScript Info:
-     * @method changes
-     * @param {Function} func  
-     * 
-     * 
-     */
-    void changes(Function func);
-
-    /**
-     * <p>allDocs with a property</p>
-     *
-     * JavaScript Info:
-     * @method allDocsWith
-     * @param {string} property  
+     * @method query
+     * @param {string} query  
+     * @param {Conf} conf  
      * 
      * @return {Promise}
      */
-    Promise allDocsWith(String property);
+    Promise query(String query, Conf conf);
 
     /**
-     * <p>allDocs</p>
+     * <p>Put</p>
      *
      * JavaScript Info:
-     * @method allDocs
+     * @method put
+     * @param {Object} obj  
      * 
      * @return {Promise}
      */
-    Promise allDocs();
+    Promise put(JavaScriptObject obj);
+
+    /**
+     * <p>Post</p>
+     *
+     * JavaScript Info:
+     * @method post
+     * @param {Object} obj  
+     * 
+     * @return {Promise}
+     */
+    Promise post(JavaScriptObject obj);
+
+    /**
+     * <p>Remove</p>
+     *
+     * JavaScript Info:
+     * @method remove
+     * @param {Object} obj  
+     * 
+     * @return {Promise}
+     */
+    Promise remove(JavaScriptObject obj);
 
 }

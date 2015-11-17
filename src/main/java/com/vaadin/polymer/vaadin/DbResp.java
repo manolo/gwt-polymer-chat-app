@@ -8,6 +8,7 @@ package com.vaadin.polymer.vaadin;
 import com.vaadin.polymer.elemental.*;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
@@ -19,8 +20,8 @@ import jsinterop.annotations.JsType;
 @com.google.gwt.core.client.js.JsType
 public interface DbResp {
 
-    public static final String TAG = "DbResp";
-    public static final String SRC = "vaadin-pouchdb/sample.html";
+    @JsOverlay public static final String NAME = "DbResp";
+    @JsOverlay public static final String SRC = "vaadin-pouchdb/sample.html";
 
 
     /**

@@ -49,23 +49,46 @@ public class VaadinPouchdb extends PolymerWidget {
      * 
      *
      * JavaScript Info:
-     * @property dbname
-     * @type String
+     * @property descending
+     * @type Boolean
      * 
      */
-    public String getDbname() {
-        return getPolymerElement().getDbname();
+    public boolean getDescending() {
+        return getPolymerElement().getDescending();
     }
     /**
      * 
      *
      * JavaScript Info:
-     * @property dbname
+     * @property descending
+     * @type Boolean
+     * 
+     */
+    public void setDescending(boolean value) {
+        getPolymerElement().setDescending(value);
+    }
+
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property index
      * @type String
      * 
      */
-    public void setDbname(String value) {
-        getPolymerElement().setDbname(value);
+    public String getIndex() {
+        return getPolymerElement().getIndex();
+    }
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property index
+     * @type String
+     * 
+     */
+    public void setIndex(String value) {
+        getPolymerElement().setIndex(value);
     }
 
     /**
@@ -91,7 +114,43 @@ public class VaadinPouchdb extends PolymerWidget {
         getPolymerElement().setRemote(value);
     }
 
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property dbname
+     * @type String
+     * 
+     */
+    public String getDbname() {
+        return getPolymerElement().getDbname();
+    }
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @property dbname
+     * @type String
+     * 
+     */
+    public void setDbname(String value) {
+        getPolymerElement().setDbname(value);
+    }
 
+
+
+    /**
+     * 
+     *
+     * JavaScript Info:
+     * @method createIndex
+     * @param {} prop  
+     * 
+     * 
+     */
+    public void createIndex(Object prop) {
+        getPolymerElement().createIndex(prop);
+    }
 
     /**
      * <p> TODO</p>
@@ -104,45 +163,6 @@ public class VaadinPouchdb extends PolymerWidget {
      */
     public void sync(Object syncError) {
         getPolymerElement().sync(syncError);
-    }
-
-    /**
-     * <p>Post</p>
-     *
-     * JavaScript Info:
-     * @method post
-     * @param {Object} obj  
-     * 
-     * @return {Promise}
-     */
-    public Promise post(JavaScriptObject obj) {
-        return getPolymerElement().post(obj);
-    }
-
-    /**
-     * <p>Put</p>
-     *
-     * JavaScript Info:
-     * @method put
-     * @param {Object} obj  
-     * 
-     * @return {Promise}
-     */
-    public Promise put(JavaScriptObject obj) {
-        return getPolymerElement().put(obj);
-    }
-
-    /**
-     * <p>Remove</p>
-     *
-     * JavaScript Info:
-     * @method remove
-     * @param {Object} obj  
-     * 
-     * @return {Promise}
-     */
-    public Promise remove(JavaScriptObject obj) {
-        return getPolymerElement().remove(obj);
     }
 
     /**
@@ -161,6 +181,18 @@ public class VaadinPouchdb extends PolymerWidget {
     }
 
     /**
+     * <p>allDocs</p>
+     *
+     * JavaScript Info:
+     * @method allDocs
+     * 
+     * @return {Promise}
+     */
+    public Promise allDocs() {
+        return getPolymerElement().allDocs();
+    }
+
+    /**
      * <p>Subscribe to changes</p>
      *
      * JavaScript Info:
@@ -174,28 +206,56 @@ public class VaadinPouchdb extends PolymerWidget {
     }
 
     /**
-     * <p>allDocs with a property</p>
+     * <p>Get all docs matching the query string if provided,<br>otherwise we will use the default index defined as an attribute.</p>
      *
      * JavaScript Info:
-     * @method allDocsWith
-     * @param {string} property  
+     * @method query
+     * @param {string} query  
+     * @param {Conf} conf  
      * 
      * @return {Promise}
      */
-    public Promise allDocsWith(String property) {
-        return getPolymerElement().allDocsWith(property);
+    public Promise query(String query, Conf conf) {
+        return getPolymerElement().query(query, conf);
     }
 
     /**
-     * <p>allDocs</p>
+     * <p>Put</p>
      *
      * JavaScript Info:
-     * @method allDocs
+     * @method put
+     * @param {Object} obj  
      * 
      * @return {Promise}
      */
-    public Promise allDocs() {
-        return getPolymerElement().allDocs();
+    public Promise put(JavaScriptObject obj) {
+        return getPolymerElement().put(obj);
+    }
+
+    /**
+     * <p>Post</p>
+     *
+     * JavaScript Info:
+     * @method post
+     * @param {Object} obj  
+     * 
+     * @return {Promise}
+     */
+    public Promise post(JavaScriptObject obj) {
+        return getPolymerElement().post(obj);
+    }
+
+    /**
+     * <p>Remove</p>
+     *
+     * JavaScript Info:
+     * @method remove
+     * @param {Object} obj  
+     * 
+     * @return {Promise}
+     */
+    public Promise remove(JavaScriptObject obj) {
+        return getPolymerElement().remove(obj);
     }
 
 
