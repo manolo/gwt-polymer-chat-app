@@ -9,6 +9,7 @@
 
     paper-toolbar, paper-fab {
       background: #FF6B00 !important;
+      background: #33B493 !important;
     }
 
     #navheader {
@@ -26,7 +27,7 @@
 
     paper-icon-item {
       display: block;
-      padding: 20px;
+      padding: 5px;
     }
     paper-icon-item iron-icon {
       width: 56px !important;
@@ -48,7 +49,6 @@
 
     .title1, .profile {
       z-index: 1;
-      text-transform: uppercase;
     }
 
     .subtitle1 {
@@ -58,8 +58,8 @@
     }
 
     .title2 {
-      font-size: 24px !important;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .message, paper-material {
       padding: 8px;

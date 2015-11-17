@@ -45,14 +45,16 @@ public class Chat implements com.google.gwt.core.client.EntryPoint {
             return null;
         });
 
+        // Use gQuery to update date field based on the time
+        // elapsed.
         Scheduler.get().scheduleFixedDelay(() -> {
             $(".ts").each(new Function() {
                 public void f() {
-                    $(this).parent().text(getTimeAgo($(this).text()));
+                    $(this).siblings("em").text(getTimeAgo($(this).text()));
                 };
             });
             return true;
-        }, 500);
+        }, 5000);
     }
 
     public static String getTimeAgo(String str) {

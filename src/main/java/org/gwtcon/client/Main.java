@@ -1,5 +1,6 @@
 package org.gwtcon.client;
 
+import static com.google.gwt.query.client.GQuery.console;
 import static com.vaadin.polymer.Polymer.cast;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
@@ -86,14 +87,15 @@ public class Main extends Composite {
 
         nicknameDialog.addEventListener("iron-overlay-closed", e -> {
             Boolean c = Polymer.property(e.getDetail(), "confirmed");
-            if (c != null && c) {
+            if (true == c && !nicknameInput.getValue().isEmpty()) {
                 prefs.setNickname(nicknameInput.getValue());
                 reloadPrefs();
             }
         });
 
         msgInput.addEventListener("keyup", e -> {
-            if (((NativeEvent) e).getKeyCode() == KeyCodes.KEY_ENTER) {
+            NativeEvent n = (NativeEvent) e;
+            if (n.getKeyCode() == KeyCodes.KEY_ENTER) {
                 send();
             }
         });
@@ -140,7 +142,7 @@ public class Main extends Composite {
 
         messages.setItems(list);
         refreshIronList(messages);
-        messages.scrollToIndex(list.length());
+
         count.setLabel("" + countRecent());
     }
 
@@ -164,21 +166,20 @@ public class Main extends Composite {
         return (T)m;
     }
 
-    // FIXME: iron-list should have a way for refreshing
-    // Also after updating iron-list, some rows are not displayed until window is resized.
+    // FIXME:
+    // 1.- iron-list should have a way for refreshing
+    // 2.- after updating some rows are not displayed until window is resized.
+    // 3.- scroll-to should be performed after grid was refreshed.
     private native static void refreshIronList(IronListElement ironList)
     /*-{
-       ironList._itemsChanged({path:'items'})
-       setTimeout(function() {
+       ironList._itemsChanged({path:'items'});
+       $wnd.Polymer.Base.async(function(){
          var ev = $doc.createEvent('Event');
          ev.initEvent('resize', true, true);
          $wnd.dispatchEvent(ev);
-       }, 200);
+         $wnd.Polymer.Base.async(function(){
+            ironList.scrollToIndex(ironList.items.length);
+         });
+       }, 100);
     }-*/;
-
-    public static Function ago = new Function() {
-        public Object call(Object arg) {
-            return null;
-        }
-    };
 }

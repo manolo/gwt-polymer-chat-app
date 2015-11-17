@@ -76,9 +76,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <style>PRETTY</style>
                     <runTarget>/</runTarget>
-                    <jsInteropMode>JS_RC</jsInteropMode>
                     <disableCastChecking>true</disableCastChecking>
                     <disableClassMetadata>true</disableClassMetadata>
                     <enableAssertions>false</enableAssertions>

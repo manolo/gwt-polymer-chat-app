@@ -51,7 +51,7 @@
                       <div class="flex">
                           <div class="owner">[[item.owner]]</div>
                           <div class="text">[[item.message]]</div>
-                          <div class="time"><span class="ts">[[item.ts]]</span></div>
+                          <div class="time"><span class="ts">[[item.ts]]</span><em></em></div>
                       </div>
                       <iron-icon icon="star"/>
                   </paper-material>
@@ -67,7 +67,7 @@
   </paper-drawer-panel>
 
   <paper-dialog ui:field="nicknameDialog" modal="true" class="layout vertical center">
-    <h2>What's your Nickname</h2>
+    <h2>What's your Robot</h2>
     <paper-input ui:field="nicknameInput" class="flex" style="width: 80%"/>
     <div class="buttons">
       <paper-button elevation="1"  dialog-dismiss="">Cancel</paper-button>
@@ -82,9 +82,10 @@
 
   <iron-localstorage name="prefs" ui:field="store"/>
 
-<!--   <vaadin-pouchdb index='ts' dbname='http://sa:sa@localhost:5984/chat' ui:field="db" /> -->
-  <vaadin-pouchdb index='ts' dbname='https://gwtcon:gwtcon15@manolo.cloudant.com/chat' ui:field="db" />
-<!--   <vaadin-pouchdb dbname='chats' index='ts' ui:field="db" /> -->
+<!--  Uncomment the appropriate line and change credentials to use couchdb instance -->
+<!--   <vaadin-pouchdb index='ts' dbname='http://sa:xxx@localhost:5984/chat' ui:field="db" /> -->
+<!--   <vaadin-pouchdb index='ts' dbname='https://gwtcon:xxx@manolo.cloudant.com/chat' ui:field="db" /> -->
+  <vaadin-pouchdb dbname='chats' index='ts' ui:field="db" />
 
   </g:HTMLPanel>
 </ui:UiBinder>
