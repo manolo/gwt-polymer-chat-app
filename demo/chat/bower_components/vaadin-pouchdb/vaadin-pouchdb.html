@@ -15,18 +15,25 @@
       remote: {
         type: String,
         value: null
+      },
+      index: {
+        type: String,
+        value: null,
+        observer: '_indexChanged'
+      },
+      descending: {
+        type: Boolean
       }
     },
 
     _db: null,
     _oldname: null,
     _dbnameChanged: function() {
-      console.log("CHANGED", this.dbname, this._oldname, this._db)
       if (this.dbname != this._oldname) {
         this._db = new PouchDB(this.dbname);
       }
     },
-    
+
     /**
      * Info
      *
@@ -38,7 +45,7 @@
     info: function(info, fnc, err) {
        return this._db.changes({since: info.update_seq, onError: err, onChange: fnc, continuous: true});
     },
-    
+
     /**
      * Post
      *
@@ -47,40 +54,7 @@
      * @return {Promise} a promise
      */
     post: function(obj) {
-      return this._db.post(obj);      
-    },
-     
-    /**
-     * allDocs
-     *
-     * @method allDocs
-     * @return {Promise} a promise
-     */
-    allDocs: function() {
-      console.log("alldocs", this._db);
-      return this.allDocsWith();
-    },
-
-    /**
-     * allDocs with a property
-     *
-     * @method allDocs
-     * @param {string} property 
-     * @return {Promise} a promise
-     */
-    allDocsWith: function(property) {
-      return new Promise(function(resolve, reject) {
-        this._db.allDocs({include_docs: true}).then(function(req) {
-          var r = [];
-          for (i = 0 ; i < req.rows.length; i++) {
-            var doc = req.rows[i].doc;
-            if (doc && !property || doc[property] !== undefined) {
-              r.push(doc);
-            }
-          }
-          resolve(r);
-        });
-      }.bind(this));
+      return this._db.post(obj);
     },
 
     /**
@@ -91,9 +65,9 @@
      * @return {Promise} a promise
      */
     remove: function(obj) {
-      return this._db.remove(obj);      
+      return this._db.remove(obj);
     },
-    
+
     /**
      * Subscribe to changes
      *
@@ -106,10 +80,10 @@
         live: true,
         include_docs: true
       }).on('change', function(obj){
-        func(obj.doc); 
+        func(obj.doc);
       });
     },
-     
+
     /**
      * Put
      *
@@ -118,12 +92,68 @@
      * @return {Promise} a promise
      */
     put: function(obj) {
-      return this._db.put(obj);      
+      return this._db.put(obj);
     },
-    
+
     // TODO
     sync: function(syncError) {
     },
+
+    /**
+     * allDocs
+     *
+     * @method allDocs
+     * @return {Promise} a promise
+     */
+    allDocs: function() {
+      return this.query();
+    },
+
+    /**
+     * Get all docs matching the query string if provided,
+     * otherwise we will use the default index defined as an attribute.
+     *
+     * @method query
+     * @param {string} query, by default use the index attribute
+     * @param {Conf} conf, by default  include_docs=true
+     * @return {Promise} a promise
+     */
+    query: function(query, conf) {
+      return new Promise(function(resolve, reject) {
+        conf = conf || {include_docs: true, descending: this.descending};
+        query = query || this.index;
+        (query ? this._db.query(query, conf) : this._db.allDocs(conf))
+        .then(function(req) {
+          var r = [];
+          for (i = 0 ; i < req.rows.length; i++) {
+            r.push(req.rows[i].doc);
+          }
+          resolve(r);
+        });
+      }.bind(this));
+    },
+    _indexChanged: function() {
+      if (this.index) {
+         this.createIndex(this.index)
+      }
+    },
+    createIndex: function(prop) {
+      var views = {};
+      views[prop] = {
+          map: "function(doc){if(doc." + prop + ") emit(doc." + prop + ")}"
+      }
+      var idx = {
+        _id: '_design/' + prop,
+        views: views
+      };
+      console.log("Created index: ", prop, idx);
+      this._db.put(idx)
+      .then(function () {
+        return this._db.query(prop, {stale: 'update_after'});
+      }).catch(function (err) {
+        if (err.name != 'conflict') throw(err);
+      });
+    }
   });
 </script>
 
@@ -177,6 +207,53 @@ Polymer.Vaadin.DbRow = {
        type: String
      }
    }
+};
+
+/**
+ * @polymerBehavior Conf
+ */
+Polymer.Vaadin.Conf = {
+  properties: {
+    key: {
+      type: String
+    },
+    keys: {
+      type: Array
+    },
+    startkey: {
+      type: String
+    },
+    endkey: {
+      type: String
+    },
+    limit: {
+      type: Number
+    },
+    descending: {
+      type: Boolean
+    },
+    skip: {
+      type: Number
+    },
+    group: {
+      type: Number
+    },
+    group_level: {
+      type: Number
+    },
+    reduce: {
+      type: Boolean
+    },
+    include_docs: {
+      type: Boolean
+    },
+    inclusive_end: {
+      type: Boolean
+    },
+    update_seq: {
+      type: Boolean
+    }
+  }
 };
 
 </script>

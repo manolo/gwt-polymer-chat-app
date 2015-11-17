@@ -1,11 +1,17 @@
 
-    paper-toolbar, paper-fab {
-      background: #FF6B00 !important;
-    }
-
-    #drawerPanel {
+    body {
       font-family: arial;
     }
+
+    paper-toolbar.tall {
+      height: 150px !important;
+    }
+
+    paper-toolbar, paper-fab {
+      background: #FF6B00 !important;
+      background: #33B493 !important;
+    }
+
     #navheader {
       font-size: inherit;
       color: #fff;
@@ -21,7 +27,7 @@
 
     paper-icon-item {
       display: block;
-      padding: 20px;
+      padding: 5px;
     }
     paper-icon-item iron-icon {
       width: 56px !important;
@@ -35,6 +41,26 @@
       background-image: url("back.jpg");
     }
 
+    #navheader .profile {
+      width: 80px;
+      height: 80px;
+      border: solid 1px;
+    }
+
+    .title1, .profile {
+      z-index: 1;
+    }
+
+    .subtitle1 {
+      font-size: 13px;
+      margin-top: -80px;
+      color: #E0E0E0;
+    }
+
+    .title2 {
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
     .message, paper-material {
       padding: 8px;
       color: #044204;
@@ -44,6 +70,16 @@
     }
     .message .owner {
       padding-top: 10px;
+    }
+    .message .time {
+      position: absolute;
+      top: 35px;
+      right: 5px;
+      font-size: 12px;
+      color: grey;
+    }
+    .message .time .ts {
+      display: none;
     }
 
     .messages {
