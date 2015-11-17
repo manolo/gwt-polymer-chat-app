@@ -12,19 +12,21 @@
 
   <style></style>
 
-  <paper-drawer-panel id="drawerPanel">
+  <paper-drawer-panel ui:field="drawerPanel" class="drawerPanel">
     <paper-header-panel mode="scroll" drawer="">
       <paper-toolbar id="navheader" class="tall">
-        <iron-image class="fit" id="coverimage" src="back.jpg" sizing="cover"></iron-image>
+        <div class="title1">The Robots Chat Room</div>
+        <div class="middle subtitle1">Powered by vaadin-gwt-polymer</div>
+        <iron-image class="top fit" id="coverimage" src="back.jpg" sizing="cover"></iron-image>
         <div ui:field="nickname" class="bottom flex"></div>
         <img ui:field="avatar" class="bottom profile" src="https://robohash.org/Unknown" />
       </paper-toolbar>
-      <paper-menu selected="0" selectable="paper-icon-item" on-iron-activate="menuSelect">
+      <paper-menu ui:field="menu" selected="0" selectable="paper-icon-item" on-iron-activate="menuSelect">
         <paper-icon-item role="menuitem">
-          <iron-icon icon="label" item-icon=""></iron-icon>Inbox
+          <iron-icon icon="label" item-icon=""></iron-icon>Robots Inbox
         </paper-icon-item>
         <paper-icon-item role="menuitem">
-          <iron-icon icon="label" item-icon=""></iron-icon>Social
+          <iron-icon icon="label" item-icon=""></iron-icon>Robots go social
         </paper-icon-item>
       </paper-menu>
     </paper-header-panel>
@@ -32,13 +34,12 @@
     <paper-header-panel id="scrollheader" mode="waterfall" main=""  keep-condensed-header="" condenses="" fixed="">
       <paper-toolbar id="mainheader" class="paper-header headerClass">
         <paper-icon-button id="navicon" icon="menu" paper-drawer-toggle=""></paper-icon-button>
-        <div class="flex title">Inbox</div>
-        <paper-icon-button icon="search" class="fade-on-drawer-open"></paper-icon-button>
-        <paper-icon-button icon="refresh" class="fade-on-drawer-open"></paper-icon-button>
-        <paper-icon-button icon="perm-identity" class="fade-on-drawer-open" ui:field="newThread"></paper-icon-button>
+        <div ui:field="title" class="flex title2">Inbox</div>
+        <paper-icon-button icon="search" class="fade-on-drawer-open" ui:field="search"></paper-icon-button>
+        <paper-icon-button icon="refresh" class="fade-on-drawer-open" ui:field="refresh"></paper-icon-button>
+        <paper-icon-button icon="perm-identity" class="fade-on-drawer-open" ui:field="config"></paper-icon-button>
         <paper-icon-button id="button" icon="speaker-notes"></paper-icon-button>
         <paper-badge for="button" label="" ui:field="count" ></paper-badge>
-
       </paper-toolbar>
 
       <div class="content layout vertical fit">
@@ -46,10 +47,11 @@
             <template>
                <div class="message">
                   <paper-material class="layout horizontal">
-                      <img class="profile" src="https://robohash.org/[[item.owner]]"/>
+                      <img class="profile" ts="[[item.owner]]"  src="https://robohash.org/[[item.owner]]"/>
                       <div class="flex">
                           <div class="owner">[[item.owner]]</div>
                           <div class="text">[[item.message]]</div>
+                          <div class="time"><span class="ts">[[item.ts]]</span></div>
                       </div>
                       <iron-icon icon="star"/>
                   </paper-material>
@@ -57,25 +59,32 @@
             </template>
         </iron-list>
         <paper-material elevation="5" class="layout horizontal write">
-        <paper-input ui:field="msgInput" label="Type message..." class="flex" allowedPattern='.+' preventInvalidInput=""/>
-        <paper-fab ui:field="send" icon="send" />
+          <paper-input ui:field="msgInput" label="Type message..." class="flex" allowedPattern='.+' preventInvalidInput=""/>
+          <paper-fab ui:field="send" icon="send" />
         </paper-material>
       </div>
     </paper-header-panel>
   </paper-drawer-panel>
 
   <paper-dialog ui:field="nicknameDialog" modal="true" class="layout vertical center">
-      <h2>What's your Nickname</h2>
-      <paper-input ui:field="nicknameInput" class="flex" style="width: 80%"/>
-      <div class="buttons">
-          <paper-button elevation="1"  dialog-dismiss="">Cancel</paper-button>
-          <paper-button elevation="1"  dialog-confirm="">Accept</paper-button>
-      </div>
+    <h2>What's your Nickname</h2>
+    <paper-input ui:field="nicknameInput" class="flex" style="width: 80%"/>
+    <div class="buttons">
+      <paper-button elevation="1"  dialog-dismiss="">Cancel</paper-button>
+      <paper-button elevation="1"  dialog-confirm="">Accept</paper-button>
+    </div>
+  </paper-dialog>
+
+  <paper-dialog ui:field="underConstruction" class="layout vertical center">
+    <h2>Not implemented yet</h2>
+    <paper-button elevation="1"  dialog-dismiss="">O.K.</paper-button>
   </paper-dialog>
 
   <iron-localstorage name="prefs" ui:field="store"/>
 
-  <vaadin-pouchdb dbname='https://gwtcon:gwtcon15@manolo.cloudant.com/chat' ui:field="db" />
+<!--   <vaadin-pouchdb index='ts' dbname='http://sa:sa@localhost:5984/chat' ui:field="db" /> -->
+  <vaadin-pouchdb index='ts' dbname='https://gwtcon:gwtcon15@manolo.cloudant.com/chat' ui:field="db" />
+<!--   <vaadin-pouchdb dbname='chats' index='ts' ui:field="db" /> -->
 
   </g:HTMLPanel>
 </ui:UiBinder>

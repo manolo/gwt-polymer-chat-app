@@ -1,11 +1,16 @@
 
+    body {
+      font-family: arial;
+    }
+
+    paper-toolbar.tall {
+      height: 150px !important;
+    }
+
     paper-toolbar, paper-fab {
       background: #FF6B00 !important;
     }
 
-    #drawerPanel {
-      font-family: arial;
-    }
     #navheader {
       font-size: inherit;
       color: #fff;
@@ -35,6 +40,27 @@
       background-image: url("back.jpg");
     }
 
+    #navheader .profile {
+      width: 80px;
+      height: 80px;
+      border: solid 1px;
+    }
+
+    .title1, .profile {
+      z-index: 1;
+      text-transform: uppercase;
+    }
+
+    .subtitle1 {
+      font-size: 13px;
+      margin-top: -80px;
+      color: #E0E0E0;
+    }
+
+    .title2 {
+      font-size: 24px !important;
+      text-transform: uppercase;
+    }
     .message, paper-material {
       padding: 8px;
       color: #044204;
@@ -44,6 +70,16 @@
     }
     .message .owner {
       padding-top: 10px;
+    }
+    .message .time {
+      position: absolute;
+      top: 35px;
+      right: 5px;
+      font-size: 12px;
+      color: grey;
+    }
+    .message .time .ts {
+      display: none;
     }
 
     .messages {

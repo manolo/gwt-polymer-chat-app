@@ -1,9 +1,10 @@
 package org.gwtcon.client;
 
-import com.google.gwt.core.client.js.JsProperty;
-import com.google.gwt.core.client.js.JsType;
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
 
-@JsType
+
+@JsType(isNative = true)
 public interface Message {
     @JsProperty
     public String getId();

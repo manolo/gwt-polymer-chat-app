@@ -1,12 +1,12 @@
 package org.gwtcon.client;
 
 import static com.vaadin.polymer.Polymer.cast;
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.js.JsProperty;
-import com.google.gwt.core.client.js.JsType;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ImageElement;
@@ -18,20 +18,25 @@ import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.vaadin.polymer.Polymer;
+import com.vaadin.polymer.elemental.Function;
 import com.vaadin.polymer.elemental.HTMLElement;
 import com.vaadin.polymer.iron.IronListElement;
 import com.vaadin.polymer.iron.IronLocalstorageElement;
 import com.vaadin.polymer.paper.PaperBadgeElement;
 import com.vaadin.polymer.paper.PaperDialogElement;
+import com.vaadin.polymer.paper.PaperDrawerPanelElement;
 import com.vaadin.polymer.paper.PaperFabElement;
+import com.vaadin.polymer.paper.PaperIconItemElement;
 import com.vaadin.polymer.paper.PaperInputElement;
+import com.vaadin.polymer.paper.PaperMenuElement;
 import com.vaadin.polymer.vaadin.VaadinPouchdbElement;
 
 public class Main extends Composite {
 
     private static String names[] = new String[] { "Sona", "Boomer", "Terra", "Qwerty", "Ayzoid", "Ac", "Scrappie", "Skip", "Plier", "Grezzer", "Ihuxroid", "Akmoid", "Talus", "Cyb", "Tera", "Ratchet", "Umap", "Akbtron" };
 
-    @JsType interface Prefs {
+    @JsType(isNative = true)
+    interface Prefs {
         @JsProperty String getNickname();
         @JsProperty void setNickname(String s);
     }
@@ -43,16 +48,22 @@ public class Main extends Composite {
     @UiField VaadinPouchdbElement db;
     @UiField IronLocalstorageElement store;
 
-    @UiField HTMLElement newThread;
+    @UiField PaperDrawerPanelElement drawerPanel;
+    @UiField PaperMenuElement menu;
+    @UiField HTMLElement search;
+    @UiField HTMLElement refresh;
+    @UiField HTMLElement config;
     @UiField PaperInputElement msgInput;
     @UiField IronListElement messages;
     @UiField DivElement nickname;
     @UiField ImageElement avatar;
+    @UiField DivElement title;
     @UiField PaperFabElement send;
     @UiField PaperBadgeElement count;
 
     @UiField PaperInputElement nicknameInput;
     @UiField PaperDialogElement nicknameDialog;
+    @UiField PaperDialogElement underConstruction;
 
     private JsArray list;
     private Prefs prefs;
@@ -60,12 +71,22 @@ public class Main extends Composite {
     public Main() {
         initWidget(uiBinder.createAndBindUi(this));
 
-        newThread.addEventListener("click", e -> {
-            nicknameDialog.open();
+
+        search.addEventListener("click", e -> underConstruction.open());
+        refresh.addEventListener("click", e -> underConstruction.open());
+
+        menu.addEventListener("iron-select", e -> {
+            title.setInnerText(((PaperIconItemElement)menu.getSelectedItem()).getTextContent());
+            if (drawerPanel.getNarrow()) {
+                drawerPanel.closeDrawer();
+            }
         });
 
+        config.addEventListener("click", e -> nicknameDialog.open());
+
         nicknameDialog.addEventListener("iron-overlay-closed", e -> {
-            if (Polymer.<Boolean>property(e.getDetail(), "confirmed")) {
+            Boolean c = Polymer.property(e.getDetail(), "confirmed");
+            if (c != null && c) {
                 prefs.setNickname(nicknameInput.getValue());
                 reloadPrefs();
             }
@@ -85,7 +106,7 @@ public class Main extends Composite {
                 return null;
             });
 
-            db.allDocs().then(rows -> {
+            db.query(null, null).then(rows -> {
                 list = cast(rows);
                 reloadPrefs();
                 return null;
@@ -120,7 +141,18 @@ public class Main extends Composite {
         messages.setItems(list);
         refreshIronList(messages);
         messages.scrollToIndex(list.length());
-        count.setLabel("" + list.length());
+        count.setLabel("" + countRecent());
+    }
+
+    private int countRecent() {
+        double now = Duration.currentTimeMillis();
+        int r = 0;
+        for (int i = 0; i < list.length(); i++) {
+            if (now - ((Message)list.get(i)).getTs() < 1000*60*20) {
+                r++;
+            }
+        }
+        return r;
     }
 
     private static <T> T createMsg(String owner, String message) {
@@ -133,8 +165,20 @@ public class Main extends Composite {
     }
 
     // FIXME: iron-list should have a way for refreshing
+    // Also after updating iron-list, some rows are not displayed until window is resized.
     private native static void refreshIronList(IronListElement ironList)
     /*-{
        ironList._itemsChanged({path:'items'})
+       setTimeout(function() {
+         var ev = $doc.createEvent('Event');
+         ev.initEvent('resize', true, true);
+         $wnd.dispatchEvent(ev);
+       }, 200);
     }-*/;
+
+    public static Function ago = new Function() {
+        public Object call(Object arg) {
+            return null;
+        }
+    };
 }
