@@ -11,6 +11,7 @@
     <name>GWT Polymer Chat</name>
 
     <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <gwtVersion>2.8.0-SNAPSHOT</gwtVersion>
       <gwtPolymerVersion>1.2.1.1-SNAPSHOT</gwtPolymerVersion>
       <maven.compiler.target>1.8</maven.compiler.target>
@@ -25,9 +26,10 @@
          <releases><enabled>false</enabled></releases>
        </repository>
        <repository>
-         <id>vaadin-snapshots</id>
-         <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+         <id>gwt-snapshots-tmp-repo</id>
+         <url>https://github.com/manolo/gwt-snapshot/raw/master/</url>
          <snapshots><enabled>true</enabled></snapshots>
+         <releases><enabled>true</enabled></releases>
        </repository>
        <repository>
          <id>google-snapshots</id>
@@ -40,6 +42,12 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
+            <scope>provided</scope>
+            <version>${gwtVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-elemental</artifactId>
             <scope>provided</scope>
             <version>${gwtVersion}</version>
         </dependency>
@@ -60,6 +68,12 @@
             <artifactId>gwtquery</artifactId>
             <version>1.4.4-SNAPSHOT</version>
             <scope>provided</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>com.google.gwt</groupId>
+                <artifactId>gwt-elemental</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
