@@ -85,7 +85,12 @@
 <!--  Uncomment the appropriate line and change credentials to use couchdb instance -->
 <!--   <vaadin-pouchdb index='ts' dbname='http://sa:xxx@localhost:5984/chat' ui:field="db" /> -->
 <!--   <vaadin-pouchdb index='ts' dbname='https://gwtcon:xxx@manolo.cloudant.com/chat' ui:field="db" /> -->
-  <vaadin-pouchdb dbname='chats' index='ts' ui:field="db" />
+  <vaadin-pouchdb
+    dbname='chats'
+    remote='http://sa:sa@localhost:5984/chat'
+    syncLive=""
+    index='ts'
+    ui:field="db" />
 
   </g:HTMLPanel>
 </ui:UiBinder>

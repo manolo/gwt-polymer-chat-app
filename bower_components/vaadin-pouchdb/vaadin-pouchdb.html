@@ -12,13 +12,16 @@
         value: 'default-db',
         observer: '_dbnameChanged'
       },
+      syncLive: {
+        type: Boolean,
+        value: true
+      },
       remote: {
         type: String,
         value: null
       },
       index: {
         type: String,
-        value: null,
         observer: '_indexChanged'
       },
       descending: {
@@ -95,10 +98,6 @@
       return this._db.put(obj);
     },
 
-    // TODO
-    sync: function(syncError) {
-    },
-
     /**
      * allDocs
      *
@@ -121,7 +120,7 @@
     query: function(query, conf) {
       return new Promise(function(resolve, reject) {
         conf = conf || {include_docs: true, descending: this.descending};
-        query = query || this.index;
+        query = query || this._indexes && this._indexes[0];
         (query ? this._db.query(query, conf) : this._db.allDocs(conf))
         .then(function(req) {
           var r = [];
@@ -132,9 +131,11 @@
         });
       }.bind(this));
     },
+    _indexes: [],
     _indexChanged: function() {
-      if (this.index) {
-         this.createIndex(this.index)
+      this._indexes = this.index && this.index.split(/[ *, *]/) || [];
+      for (var i = 0; i < this._indexes.length; i++) {
+        this.createIndex(this._indexes[i])
       }
     },
     createIndex: function(prop) {
@@ -153,6 +154,23 @@
       }).catch(function (err) {
         if (err.name != 'conflict') throw(err);
       });
+    },
+    _synchandler: undefined,
+    /**
+     * Sync
+     *
+     * @method sync
+     * @param {Function} fnc
+     * @param {Function} err
+     */
+    sync: function(fnc, err) {
+      if (!this.remote || this._synchandler) return;
+      var opts = this.syncLive ? {live: true, retry: true} : {};
+      this._db.sync(this.remote, opts)
+        .on('change', fnc)
+        .on('paused', fnc)
+        .on('active', fnc)
+        .on('error', err)
     }
   });
 </script>

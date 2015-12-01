@@ -1,5 +1,5 @@
 /*
- * This code was generated with Vaadin Web Component GWT API Generator, 
+ * This code was generated with Vaadin Web Component GWT API Generator,
  * from vaadin-pouchdb project by Manolo Carrasco Moñino
  * that is licensed with Apache license.
  */
@@ -14,7 +14,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
- * 
+ *
  */
 public class VaadinPouchdb extends PolymerWidget {
     /**
@@ -46,92 +46,115 @@ public class VaadinPouchdb extends PolymerWidget {
 
 
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @property descending
      * @type Boolean
-     * 
+     *
      */
     public boolean getDescending() {
         return getPolymerElement().getDescending();
     }
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @property descending
      * @type Boolean
-     * 
+     *
      */
     public void setDescending(boolean value) {
         getPolymerElement().setDescending(value);
     }
 
     /**
-     * 
+     *
      *
      * JavaScript Info:
-     * @property index
-     * @type String
-     * 
+     * @property syncLive
+     * @type Boolean
+     *
      */
-    public String getIndex() {
-        return getPolymerElement().getIndex();
+    public boolean getSyncLive() {
+        return getPolymerElement().getSyncLive();
     }
     /**
-     * 
+     *
      *
      * JavaScript Info:
-     * @property index
-     * @type String
-     * 
+     * @property syncLive
+     * @type Boolean
+     *
      */
-    public void setIndex(String value) {
-        getPolymerElement().setIndex(value);
+    public void setSyncLive(boolean value) {
+        getPolymerElement().setSyncLive(value);
     }
 
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @property remote
      * @type String
-     * 
+     *
      */
     public String getRemote() {
         return getPolymerElement().getRemote();
     }
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @property remote
      * @type String
-     * 
+     *
      */
     public void setRemote(String value) {
         getPolymerElement().setRemote(value);
     }
 
     /**
-     * 
+     *
+     *
+     * JavaScript Info:
+     * @property index
+     * @type String
+     *
+     */
+    public String getIndex() {
+        return getPolymerElement().getIndex();
+    }
+    /**
+     *
+     *
+     * JavaScript Info:
+     * @property index
+     * @type String
+     *
+     */
+    public void setIndex(String value) {
+        getPolymerElement().setIndex(value);
+    }
+
+    /**
+     *
      *
      * JavaScript Info:
      * @property dbname
      * @type String
-     * 
+     *
      */
     public String getDbname() {
         return getPolymerElement().getDbname();
     }
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @property dbname
      * @type String
-     * 
+     *
      */
     public void setDbname(String value) {
         getPolymerElement().setDbname(value);
@@ -140,44 +163,29 @@ public class VaadinPouchdb extends PolymerWidget {
 
 
     /**
-     * 
+     *
      *
      * JavaScript Info:
      * @method createIndex
-     * @param {} prop  
-     * 
-     * 
+     * @param {} prop
+     *
+     *
      */
     public void createIndex(Object prop) {
         getPolymerElement().createIndex(prop);
     }
 
     /**
-     * <p> TODO</p>
+     * <p>Post</p>
      *
      * JavaScript Info:
-     * @method sync
-     * @param {} syncError  
-     * 
-     * 
-     */
-    public void sync(Object syncError) {
-        getPolymerElement().sync(syncError);
-    }
-
-    /**
-     * <p>Info</p>
+     * @method post
+     * @param {Object} obj
      *
-     * JavaScript Info:
-     * @method info
-     * @param {Object} info  
-     * @param {Function} fnc  
-     * @param {Function} err  
-     * 
-     * 
+     * @return {Promise}
      */
-    public void info(JavaScriptObject info, Function fnc, Function err) {
-        getPolymerElement().info(info, fnc, err);
+    public Promise post(JavaScriptObject obj) {
+        return getPolymerElement().post(obj);
     }
 
     /**
@@ -185,7 +193,7 @@ public class VaadinPouchdb extends PolymerWidget {
      *
      * JavaScript Info:
      * @method allDocs
-     * 
+     *
      * @return {Promise}
      */
     public Promise allDocs() {
@@ -197,12 +205,41 @@ public class VaadinPouchdb extends PolymerWidget {
      *
      * JavaScript Info:
      * @method changes
-     * @param {Function} func  
-     * 
-     * 
+     * @param {Function} func
+     *
+     *
      */
     public void changes(Function func) {
         getPolymerElement().changes(func);
+    }
+
+    /**
+     * <p>Put</p>
+     *
+     * JavaScript Info:
+     * @method sync
+     * @param {Function} fnc
+     * @param {Function} err
+     *
+     *
+     */
+    public void sync(Function fnc, Function err) {
+        getPolymerElement().sync(fnc, err);
+    }
+
+    /**
+     * <p>Info</p>
+     *
+     * JavaScript Info:
+     * @method info
+     * @param {Object} info
+     * @param {Function} fnc
+     * @param {Function} err
+     *
+     *
+     */
+    public void info(JavaScriptObject info, Function fnc, Function err) {
+        getPolymerElement().info(info, fnc, err);
     }
 
     /**
@@ -210,9 +247,9 @@ public class VaadinPouchdb extends PolymerWidget {
      *
      * JavaScript Info:
      * @method query
-     * @param {string} query  
-     * @param {Conf} conf  
-     * 
+     * @param {string} query
+     * @param {Conf} conf
+     *
      * @return {Promise}
      */
     public Promise query(String query, Conf conf) {
@@ -224,8 +261,8 @@ public class VaadinPouchdb extends PolymerWidget {
      *
      * JavaScript Info:
      * @method put
-     * @param {Object} obj  
-     * 
+     * @param {Object} obj
+     *
      * @return {Promise}
      */
     public Promise put(JavaScriptObject obj) {
@@ -233,25 +270,12 @@ public class VaadinPouchdb extends PolymerWidget {
     }
 
     /**
-     * <p>Post</p>
-     *
-     * JavaScript Info:
-     * @method post
-     * @param {Object} obj  
-     * 
-     * @return {Promise}
-     */
-    public Promise post(JavaScriptObject obj) {
-        return getPolymerElement().post(obj);
-    }
-
-    /**
      * <p>Remove</p>
      *
      * JavaScript Info:
      * @method remove
-     * @param {Object} obj  
-     * 
+     * @param {Object} obj
+     *
      * @return {Promise}
      */
     public Promise remove(JavaScriptObject obj) {

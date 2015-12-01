@@ -111,6 +111,13 @@ public class Main extends Composite {
             db.query(null, null).then(rows -> {
                 list = cast(rows);
                 reloadPrefs();
+                db.sync(arg -> {
+                    console.log("Connected");
+                    return null;
+                }, arg -> {
+                    console.log("DisConnected");
+                    return null;
+                });
                 return null;
             });
             return null;
