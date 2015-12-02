@@ -1,5 +1,5 @@
 {
-    "name": "Vaadin GWT Polymer Elements - Robots Chat"
+    "name": "Vaadin GWT Polymer Elements - Robots Chat",
     "short_name": "Robots Chat",
     "icons": [
         {
@@ -8,7 +8,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/demo/chat.html",
+    "start_url": "index.html",
     "orientation": "portrait",
     "display": "standalone",
     "theme_color": "#006cb4",

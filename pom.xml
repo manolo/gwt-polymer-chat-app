@@ -13,6 +13,7 @@
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <gwtVersion>2.8.0-SNAPSHOT</gwtVersion>
+      <gwtMavenVersion>2.8.0-SNAPSHOT</gwtMavenVersion>
       <gwtPolymerVersion>1.2.1.1-SNAPSHOT</gwtPolymerVersion>
       <maven.compiler.target>1.8</maven.compiler.target>
       <maven.compiler.source>1.8</maven.compiler.source>
@@ -37,6 +38,18 @@
          <snapshots><enabled>true</enabled></snapshots>
        </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots><enabled>true</enabled></snapshots>
+            <releases><enabled>false</enabled></releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>rzymek-snapshots</id>
+            <url>https://github.com/rzymek/repository/raw/master/snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -82,6 +95,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwtMavenVersion}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -129,7 +143,36 @@
                     </resources>
                   </configuration>
                 </execution>
+                <execution>
+                  <id>copy-bower</id>
+                  <phase>generate-sources</phase>
+                  <goals>
+                    <goal>copy-resources</goal>
+                  </goals>
+                  <configuration>
+                    <outputDirectory>src/main/java/org/gwtcon/public/bower_components</outputDirectory>
+                    <resources>
+                      <resource>
+                       <directory>bower_components</directory>
+                       <filtering>true</filtering>
+                      </resource>
+                    </resources>
+                  </configuration>
+                </execution>
               </executions>
+            </plugin>
+            <plugin>
+                <groupId>watcher</groupId>
+                <artifactId>watcher-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <watch>
+                        <param>
+                            <on>bower_components/vaadin-pouchdb/vaadin-pouchdb.html</on>
+                            <run>generate-sources</run>
+                        </param>
+                    </watch>
+                </configuration>
             </plugin>
         </plugins>
     </build>
