@@ -77,8 +77,13 @@
 
 <!--   <vaadin-pouchdb dbname='chat' index="ts" ui:field="db" /> -->
 <!--   <vaadin-pouchdb dbname='http://sa:***@127.0.0.1:5984/chat' index="ts" ui:field="db" /> -->
-  <vaadin-pouchdb index='ts' dbname='https://gwtcon:***@manolo.cloudant.com/chat' ui:field="db" />
-
+<!--   <vaadin-pouchdb index='ts' dbname='https://gwtcon:***@manolo.cloudant.com/chat' ui:field="db" /> -->
+  <vaadin-pouchdb
+    dbname='chats'
+    remote='http://sa:***@localhost:5984/chat'
+    live=""
+    index='ts'
+    ui:field="db" />
 
   </g:HTMLPanel>
 </ui:UiBinder>

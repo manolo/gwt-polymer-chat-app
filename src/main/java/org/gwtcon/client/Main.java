@@ -89,6 +89,8 @@ public class Main extends Composite {
                 return null;
             });
 
+            db.sync(null, null);
+
             db.query(null, null).then(rows -> {
                 list = cast(rows);
                 reloadPrefs();
